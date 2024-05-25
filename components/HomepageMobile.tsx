@@ -16,7 +16,7 @@ interface IPlant {
   current_exp: number;
 }
 
-export const Homepage = () => {
+export const HomepageMobile = () => {
   const [user, setUser] = useState<IUser | null>()
   const [plant, setPlant] = useState<IPlant | null>()
 
@@ -61,10 +61,7 @@ export const Homepage = () => {
           <Text>Exp Level: {plant!.current_exp}</Text>
         </View>
       </View>
-
-      <button>tasklist</button>
-      <button>addtask</button>
-      <button>settings</button>
+      <TestListMobile />
     </View>
 
 
