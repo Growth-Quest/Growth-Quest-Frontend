@@ -28,7 +28,7 @@ const Signup = () => {
         console.error("Error signing up: No response received");
       } else {
         console.error("Error signing up: ", error.message);
-      }
+      } 
       alert("Error signing up");
       return;
     }

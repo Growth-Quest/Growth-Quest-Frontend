@@ -13,6 +13,9 @@ const TabLayout = () => {
       <Tabs.Screen name='tasklist' options={{
         title: 'Task List',
       }}/>
+      <Tabs.Screen name='profile' options={{
+        title: 'Profile',
+      }}/>
     </Tabs>
   )
 }

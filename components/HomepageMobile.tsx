@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import RenderTaskList from "./tasklist";
+import TestListMobile from "./TaskListMobile";
 
 
 interface IUser {
@@ -16,7 +16,7 @@ interface IPlant {
   current_exp: number;
 }
 
-const Home = () => {
+export const HomepageMobile = () => {
   const [user, setUser] = useState<IUser | null>()
   const [plant, setPlant] = useState<IPlant | null>()
 
@@ -25,7 +25,11 @@ const Home = () => {
 
     const fetchUser = async () => {
       try {
-        const user = await axios.get(`https://growth-quest.onrender.com/users/get/:${user_id}`)
+        const user = await axios.get(`https://growth-quest.onrender.com/users/get/:${user_id}`,
+          {
+            params: { user_id },
+          }
+        )
         setUser(user.data)
       } catch (error) {
         console.log('user not found', error)
@@ -48,21 +52,19 @@ const Home = () => {
 
   return (
     <View>
-      {user && plant && (
+      {user && (
         <Text>Username: {user.username}</Text>
       )}
       <View>
         <View>
-          <Text>Level: {plant?.level}</Text>
-          <Text>Exp Level: {plant?.current_exp}</Text>
+          <Text>Level: {plant!.level}</Text>
+          <Text>Exp Level: {plant!.current_exp}</Text>
         </View>
       </View>
-      <RenderTaskList />
+      <TestListMobile />
     </View>
 
 
   )
 
 }
-
-export default Home
