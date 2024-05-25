@@ -45,6 +45,7 @@ const TaskListWeb = () => {
       ))}
     </View>
   );
+
 };
 
 export default TaskListWeb;
