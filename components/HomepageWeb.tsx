@@ -4,6 +4,8 @@ import { router } from "expo-router";
 import { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import ListOfTaskWeb from "./ListOfTaskWeb";
+import { useTokenValidation } from "./Authvalid/ValidToken";
+
 
 interface IUser {
   username: string;
@@ -27,14 +29,11 @@ export const HomepageWeb = () => {
         const user = await axios.get(
           `https://growth-quest.onrender.com/users/get/${user_id}`,
           {
-            headers: {
-              'Authorization': "Bearer " + token,
-            },
             params: { user_id },
           }
         );
         setUser(user.data);
-      } catch (error) {  
+      } catch (error) {
         console.log("user not found", error);
       }
     };
@@ -44,9 +43,6 @@ export const HomepageWeb = () => {
         const plant = await axios.get(
           `https://growth-quest.onrender.com/plants/get-by-user/${user_id}`,
           {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
             params: { user_id },
           }
         );
@@ -59,7 +55,19 @@ export const HomepageWeb = () => {
 
     fetchUser();
     fetchPlant();
-  }, [plant]);
+  }, []);
+
+  const { tokenValid } = useTokenValidation();
+
+
+  if (tokenValid === null) {
+    return <div>Loading...</div>; // Or some loading spinner
+  }
+
+  if (!tokenValid) {
+    return <div>Invalid token</div>; // Or redirect to login page
+  }
+
 
   return (
     <div>

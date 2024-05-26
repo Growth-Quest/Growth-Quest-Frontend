@@ -19,6 +19,7 @@ const LoginWeb = () => {
         }
       );
       console.log("Login response :", response.data);
+      localStorage.setItem("token", response.data.token);
       localStorage.setItem("user_id", response.data.userId);
       localStorage.setItem("plant_id", response.data.plant_id)
       router.push("/home");

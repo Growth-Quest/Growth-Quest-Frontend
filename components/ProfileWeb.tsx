@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { router } from "expo-router";
 
 interface IUser {
     username: string;
@@ -46,7 +47,13 @@ const Profile = () => {
 
         fetchPlant();
         fetchUser();
-    }, []);
+    }, []);    
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("plant_id");
+        router.push("/");
+    }
 
     const handleEdit = async () => {
         const user_id = localStorage.getItem("user_id");
@@ -101,6 +108,9 @@ const Profile = () => {
                     <p>Exp Level: {plant.current_exp}</p>
                 </div>
             )}
+            <div>
+            <button onClick={handleLogout}>Logout</button>
+            </div>
         </div>
     );
 }
