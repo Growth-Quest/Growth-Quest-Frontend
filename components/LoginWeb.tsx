@@ -2,13 +2,16 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { router } from "expo-router";
+import LoadingScreen from "./LoadingScreen";
 
 const LoginWeb = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true); // Start loading
 
     try {
       const response = await axios.post(
@@ -33,39 +36,83 @@ const LoginWeb = () => {
         console.error("Error logging in: ", error.message);
       }
       alert("Error logging in");
-      return;
+    } finally {
+      setLoading(false); // Stop loading, whether success or error
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="signup-background">
+      {loading ? (
+        <LoadingScreen />
+      ) : (
         <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          <center>
+            <div className="box">
+              <form onSubmit={handleSubmit}>
+                <div>
+                <label className="signup-title">Login</label>
+                <br></br>
+                <br></br>
+                <br></br>
+                  <label htmlFor="username">
+                    <label>
+                      <div className="signup-text">
+                        <span>Username:</span>
+                      </div>
+                    </label>
+                  </label>
+        
+                  <br></br>
+                  <input
+                   className="input"
+                    type="text"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+                <br></br>
+                <div>
+                  <label htmlFor="password">
+                    <label>
+                      <div className="signup-text">
+                        <span>Password:</span>
+                      </div>
+                    </label>
+                  </label>
+                  
+                  <br></br>
+                  <input
+                   className="input"
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <br></br>
+                <button className="signup" type="submit">Login</button>
+                <br></br>
+                <br></br>
+                <label className="signup-text">
+                  Don't have an account?{" "}
+                  <Pressable
+                    onPress={() => {
+                      router.push("/signup");
+                    }}
+                  >
+                    Sign Up
+                  </Pressable>
+                </label>
+              </form>
+            </div>
+          </center>
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-        <Pressable onPress={ () => {
-          router.push("/signup");
-        }}>Signup</Pressable>
-      </form>
+      )}
     </div>
   );
 };
 
 export default LoginWeb;
+``;
