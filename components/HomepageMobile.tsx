@@ -1,11 +1,7 @@
 import axios from "axios";
-import React from "react";
-import { router } from "expo-router";
-import { useState, useEffect } from "react";
-import { View, Text } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import TestListMobile from "./TaskListMobile";
-
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface IUser {
   username: string;
@@ -14,57 +10,67 @@ interface IUser {
 interface IPlant {
   level: number;
   current_exp: number;
+  health_points: number;
 }
 
 export const HomepageMobile = () => {
-  const [user, setUser] = useState<IUser | null>()
-  const [plant, setPlant] = useState<IPlant | null>()
+  const [user, setUser] = useState<IUser | null>(null);
+  const [plant, setPlant] = useState<IPlant | null>(null);
 
   useEffect(() => {
-    const user_id = AsyncStorage.getItem("user_id");
+    const fetchUserData = async () => {
+      const user_id = await AsyncStorage.getItem("user_id");
 
-    const fetchUser = async () => {
+      if (!user_id) {
+        console.log("No user ID found in local storage");
+        return;
+      }
+
       try {
-        const user = await axios.get(`https://growth-quest.onrender.com/users/get/:${user_id}`,
+        const userResponse = await axios.get(
+          `https://growth-quest.onrender.com/users/get/${user_id}`,
           {
             params: { user_id },
           }
-        )
-        setUser(user.data)
+        );
+        setUser(userResponse.data);
       } catch (error) {
-        console.log('user not found', error)
+        console.log("user not found", error);
       }
-    }
 
-    const fetchPlant = async () => {
       try {
-        const plant = await axios.get(`https://growth-quest.onrender.com/plants/get-by-user/${user_id}`)
-        setPlant(plant.data)
-        console.log("plant", plant.data)
+        const plantResponse = await axios.get(
+          `https://growth-quest.onrender.com/plants/get-by-user/${user_id}`,
+          {
+            params: { user_id },
+          }
+        );
+        setPlant(plantResponse.data);
+        console.log("plant", plantResponse.data);
       } catch (error) {
-        console.log('plant not found', error)
+        console.log("plant not found", error);
       }
-    }
+    };
 
-    fetchUser()
-    fetchPlant()
-  }, [])
+    fetchUserData();
+  }, []);
 
   return (
-    <View>
-      {user && (
-        <Text>Username: {user.username}</Text>
+    <View style={styles.container}>
+      {user && <Text>Username: {user.username}</Text>}
+      {plant && (
+        <>
+          <Text>Level: {plant.level}</Text>
+          <Text>Exp: {plant.current_exp}</Text>
+          <Text>Health: {plant.health_points}</Text>
+        </>
       )}
-      <View>
-        <View>
-          <Text>Level: {plant!.level}</Text>
-          <Text>Exp Level: {plant!.current_exp}</Text>
-        </View>
-      </View>
-      <TestListMobile />
     </View>
+  );
+};
 
-
-  )
-
-}
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+});

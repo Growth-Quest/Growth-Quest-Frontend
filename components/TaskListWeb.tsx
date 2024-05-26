@@ -8,7 +8,7 @@ interface Task {
   description: string;
   type: string;
 }
-
+ 
 const TaskListWeb = () => {
   const [taskList, setTaskList] = useState<Task[]>([]);
   const user_id = localStorage.getItem("user_id");

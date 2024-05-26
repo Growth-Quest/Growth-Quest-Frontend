@@ -14,7 +14,7 @@ interface IPlant {
     current_exp: number;
 }
 
-const Profile = () => {
+const ProfileMobile = () => {
     const [user, setUser] = useState<IUser | null>();
     const [plant, setPlant] = useState<IPlant | null>();
     const [editing, setEditing] = useState<boolean>(false);
@@ -106,3 +106,5 @@ const Profile = () => {
 
     );
 }
+
+export default ProfileMobile;

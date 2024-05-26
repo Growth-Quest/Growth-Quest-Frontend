@@ -3,7 +3,7 @@ import React from "react";
 import { router } from "expo-router";
 import { useState, useEffect } from "react";
 import { View, Text } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import ListOfTaskWeb from "./ListOfTaskWeb";
 
 interface IUser {
   username: string;
@@ -19,6 +19,7 @@ export const HomepageWeb = () => {
   const [user, setUser] = useState<IUser | null>();
   const [plant, setPlant] = useState<IPlant | null>();
   const user_id = localStorage.getItem("user_id");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -26,11 +27,14 @@ export const HomepageWeb = () => {
         const user = await axios.get(
           `https://growth-quest.onrender.com/users/get/${user_id}`,
           {
+            headers: {
+              'Authorization': "Bearer " + token,
+            },
             params: { user_id },
           }
         );
         setUser(user.data);
-      } catch (error) {
+      } catch (error) {  
         console.log("user not found", error);
       }
     };
@@ -40,6 +44,9 @@ export const HomepageWeb = () => {
         const plant = await axios.get(
           `https://growth-quest.onrender.com/plants/get-by-user/${user_id}`,
           {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
             params: { user_id },
           }
         );
@@ -67,6 +74,7 @@ export const HomepageWeb = () => {
       <div>
       <Text>Health: {plant?.health_points}</Text> 
       </div>
+      <ListOfTaskWeb />
       <div />
     </div>
   );
