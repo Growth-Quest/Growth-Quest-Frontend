@@ -24,3 +24,9 @@ export const getElementByTagName = async (tag: string, driver: WebDriver) => {
   return await driver.wait(until.elementLocated(By.tagName(tag)), 10000);
 };
 
+export const getElementByText = async (tag: string, text: string, driver: WebDriver) => {
+  return await driver.wait(
+    until.elementLocated(By.xpath(`//${tag}[contains(text(), '${text}')]`)),
+    10000
+  );
+};

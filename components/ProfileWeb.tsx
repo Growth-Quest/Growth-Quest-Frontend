@@ -95,17 +95,17 @@ const Profile = () => {
                         </>
                     ) : (
                         <>
-                            <p>Username: {user.username}</p>
-                            <p>Email: {user.email}</p>
-                            <button onClick={() => setEditing(true)}>Edit</button>
+                            <p id="username" >Username: {user.username}</p>
+                            <p id="email" >Email: {user.email}</p>
+                            <button id="edit-user-info" onClick={() => setEditing(true)}>Edit</button>
                         </>
                     )}
                 </>
             )}
             {plant && (
                 <div>
-                    <p>Level: {plant.level}</p>
-                    <p>Exp Level: {plant.current_exp}</p>
+                    <p id="plant-level">Level: {plant.level}</p>
+                    <p id="plant-current-exp">Exp Level: {plant.current_exp}</p>
                 </div>
             )}
             <div>

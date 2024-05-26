@@ -72,24 +72,30 @@ const TaskListWeb = () => {
   return (
     <View style={styles.container}>
       {taskList.map((task, index) => (
-        <View key={index} style={styles.taskContainer}>
+        <View key={index} style={styles.taskContainer} id={"task-" + index}>
           <Text style={styles.taskName}>{task.task_name}</Text>
           <Text style={styles.taskDescription}>{task.description}</Text>
           <Text style={styles.taskType}>{task.type}</Text>
           <View style={styles.buttonContainer}>
             <View>
-              <Button
+              <button
+                id={"done-button-" + index}
                 title="Done"
-                onPress={() => handleDone(task.id)}
+                onClick={() => handleDone(task.id)}
                 color="green"
-              />
+              >
+                Done
+              </button>
             </View>
             <View style={styles.giveUpButton}>
-              <Button
+              <button
+                id={ "give-up-button-" + index }
                 title="Give Up"
-                onPress={() => handleFailed(task.id)}
+                onClick={() => handleFailed(task.id)}
                 color="red"
-              />
+              >
+                Give Up
+              </button>
             </View>
           </View>
         </View>

@@ -31,7 +31,7 @@ describe('LoginPageWeb', () => {
 
     const username = await getElementById('username', driver);
     console.log('username', username);
-    await username.sendKeys('Lesbolds_3');
+    await username.sendKeys('NewUsername');
 
     // Wait for the password input to be present and interactable
     const password = await getElementById('password', driver);
