@@ -6,7 +6,8 @@ const AddTaskWeb = () => {
   // State for each input field
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [difficulty, setDifficulty] = useState("medium");
+  const [difficulty, setDifficulty] = useState("easy");
+  const [expValue, setExpValue] = useState(0);
 
   const user_id = localStorage.getItem("user_id");
 
@@ -15,12 +16,26 @@ const AddTaskWeb = () => {
     e.preventDefault(); // Prevent the form from refreshing the page
 
     try {
+      switch(difficulty) {
+        case "easy":
+          setExpValue(10);
+          break;
+        case "medium":
+          setExpValue(20);
+          break;
+        case "hard":
+          setExpValue(30);
+          break;
+        default:
+          setExpValue(0);
+      }
       const response = await axios.post(
         "https://growth-quest.onrender.com/tasks/create",
         {
           task_name: title,
           description,
           type: difficulty,
+          exp_value: expValue,
           user_id
         }
       );

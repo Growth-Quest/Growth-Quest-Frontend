@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -21,11 +21,7 @@ const TaskListMobile = () => {
       const user_id = await AsyncStorage.getItem("user_id");
       console.log("user id: ", user_id);
       const response = await axios.get(
-        "https://growth-quest.onrender.com/tasks/get-by-user",
-        {
-          params: { user_id },
-        }
-      );
+        "https://growth-quest.onrender.com/tasks/get-by-user/" + user_id);
       console.log("Response: ", response.data);
       setTaskList(response.data);
     } catch (error) {
@@ -46,6 +42,11 @@ const TaskListMobile = () => {
           task_id,
         }
       );
+      if(value = 'Done'){
+        alert("Congratulations on completing your task")
+      }else{
+        alert("Nice try")
+      }
       console.log("Response: ", response.data);
       fetchTasks();
     } catch (error) {
@@ -60,55 +61,25 @@ const TaskListMobile = () => {
           <Text>{task.task_name}</Text>
           <Text>{task.description}</Text>
           <Text>{task.type}</Text>
-          <Picker
-            selectedValue={selectedStatus[task.id] || task.status}
-            onValueChange={(itemValue) => {
-              setSelectedStatus((prevState) => ({
-                ...prevState,
-                [task.id]: itemValue,
-              }));
-              handleTaskStatus(task.id, itemValue);
-            }}
-            style={styles.picker}
-          >
-            <Picker.Item label="Pending" value="pending" />
-            <Picker.Item label="In Progress" value="in_progress" />
-            <Picker.Item label="Completed" value="completed" />
-          </Picker>
+          <View>
+          <Button
+                title="Done"
+                onPress={() => handleTaskStatus(task.id, "done")}
+                color="green"
+              />          
+              </View>
+          <View>
+          <Button
+                title="Done"
+                onPress={() => handleTaskStatus(task.id, "give up")}
+                color="red"
+              />    
+            </View>
         </View>
       ))}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  taskContainer: {
-    marginBottom: 20,
-    padding: 15,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  taskName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  taskDescription: {
-    fontSize: 14,
-    marginBottom: 10,
-  },
-  taskType: {
-    fontSize: 14,
-    marginBottom: 10,
-    fontStyle: 'italic',
-  },
-  picker: {
-    height: 50,
-    width: 150,
-  },
-});
 
 export default TaskListMobile;

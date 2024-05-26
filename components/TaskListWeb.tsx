@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { Button, View, Text, StyleSheet } from "react-native";
 
 interface Task {
+  id: string;
   task_name: string;
   description: string;
   type: string;
@@ -11,16 +12,16 @@ interface Task {
 const TaskListWeb = () => {
   const [taskList, setTaskList] = useState<Task[]>([]);
   const user_id = localStorage.getItem("user_id");
+  const plant_id = localStorage.getItem("plant_id");
 
-  const handlelistFetch = async () => {
+  const fetchTasks = async () => {
     try {
       console.log("user id: ", user_id);
-      const response = await axios.get(
-        "https://growth-quest.onrender.com/tasks/get-by-user",
+      const response = await axios.post(
+        "https://growth-quest.onrender.com/tasks/get-by-status",
         {
-          params: {
-            user_id,
-          },
+          user_id,
+          status: "ongoing",
         }
       );
       console.log("Response: ", response.data);
@@ -30,22 +31,103 @@ const TaskListWeb = () => {
     }
   };
 
+  const handleDone = async (task_id: string) => {
+    try {
+      const response = await axios.put(
+        "https://growth-quest.onrender.com/tasks/task-done",
+        {
+          task_id,
+          plant_id,
+        }
+      );
+      alert("Task Complete");
+      console.log("Response: ", response.data);
+      await fetchTasks();
+    } catch (error) {
+      console.error("Error updating task status: ", error);
+    }
+  };
+
+  const handleFailed = async (task_id: string) => {
+    try {
+      const response = await axios.put(
+        "https://growth-quest.onrender.com/tasks/task-failed",
+        {
+          task_id,
+          plant_id,
+        }
+      );
+      alert("Task Failed");
+      console.log("Response: ", response.data);
+      fetchTasks();
+    } catch (error) {
+      console.error("Error updating task status: ", error);
+    }
+  };
+
   useEffect(() => {
-    handlelistFetch();
-  });
+    fetchTasks();
+  }, []);
 
   return (
-    <View>
+    <View style={styles.container}>
       {taskList.map((task, index) => (
-        <View key={index}>
-          <Text>{task.task_name}</Text>
-          <Text>{task.description}</Text>
-          <Text>{task.type}</Text>
+        <View key={index} style={styles.taskContainer}>
+          <Text style={styles.taskName}>{task.task_name}</Text>
+          <Text style={styles.taskDescription}>{task.description}</Text>
+          <Text style={styles.taskType}>{task.type}</Text>
+          <View style={styles.buttonContainer}>
+            <View>
+              <Button
+                title="Done"
+                onPress={() => handleDone(task.id)}
+                color="green"
+              />
+            </View>
+            <View style={styles.giveUpButton}>
+              <Button
+                title="Give Up"
+                onPress={() => handleFailed(task.id)}
+                color="red"
+              />
+            </View>
+          </View>
         </View>
       ))}
     </View>
   );
- 
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  taskContainer: {
+    marginBottom: 20,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+  },
+  taskName: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  taskDescription: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  taskType: {
+    fontSize: 14,
+    fontStyle: "italic",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  giveUpButton: {
+    marginLeft: 10,
+  },
+});
 
 export default TaskListWeb;
