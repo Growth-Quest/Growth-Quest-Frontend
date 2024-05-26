@@ -15,6 +15,9 @@ const RootLayout = () => {
       <Stack.Screen name='signup' options={{
         headerShown: false,
       }}/>
+      <Stack.Screen name='password-error' options={{
+        headerShown: false,
+      }}/>
     </Stack>
   )
 }
