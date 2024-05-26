@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTokenValidation } from "./Authvalid/ValidToken";
 
 interface IUser {
   username: string;
@@ -54,6 +55,17 @@ export const HomepageMobile = () => {
 
     fetchUserData();
   }, []);
+
+  const { tokenValid } = useTokenValidation();
+
+
+  if (tokenValid === null) {
+    return <div>Loading...</div>; // Or some loading spinner
+  }
+
+  if (!tokenValid) {
+    return <div>Invalid token</div>; // Or redirect to login page
+  }
 
   return (
     <View style={styles.container}>
