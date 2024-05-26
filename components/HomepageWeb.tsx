@@ -3,7 +3,9 @@ import React from "react";
 import { router } from "expo-router";
 import { useState, useEffect } from "react";
 import { View, Text } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import ListOfTaskWeb from "./ListOfTaskWeb";
+import { useTokenValidation } from "./Authvalid/ValidToken";
+
 
 interface IUser {
   username: string;
@@ -19,6 +21,7 @@ export const HomepageWeb = () => {
   const [user, setUser] = useState<IUser | null>();
   const [plant, setPlant] = useState<IPlant | null>();
   const user_id = localStorage.getItem("user_id");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -52,7 +55,19 @@ export const HomepageWeb = () => {
 
     fetchUser();
     fetchPlant();
-  }, [plant]);
+  }, []);
+
+  const { tokenValid } = useTokenValidation();
+
+
+  if (tokenValid === null) {
+    return <div>Loading...</div>; // Or some loading spinner
+  }
+
+  if (!tokenValid) {
+    return <div>Invalid token</div>; // Or redirect to login page
+  }
+
 
   return (
     <div>
@@ -67,6 +82,7 @@ export const HomepageWeb = () => {
       <div>
       <Text>Health: {plant?.health_points}</Text> 
       </div>
+      <ListOfTaskWeb />
       <div />
     </div>
   );
