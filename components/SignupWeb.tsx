@@ -24,8 +24,13 @@ const Signup = () => {
       router.push("/");
     } catch (error: any) {
       if (error.response) {
-        console.error("Error status: ", error.response.status);
-        console.error("Error signing up: ", error.response.data);
+        const responseData = error.response.data;
+        if (responseData && responseData.message) {
+          alert(responseData.message); 
+        } else {
+          console.error("Error status: ", error.response.status);
+          console.error("Error signing up: ", responseData);
+        }
       } else if (error.request) {
         console.error("Error signing up: No response received");
       } else {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button, View, Text, StyleSheet, ImageBackground } from "react-native";
+import LoadingScreen from "./LoadingScreen";
 
 interface Task {
   id: string;
@@ -10,6 +11,7 @@ interface Task {
 }
 
 const TaskListWeb = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [taskList, setTaskList] = useState<Task[]>([]);
   const user_id = localStorage.getItem("user_id");
   const plant_id = localStorage.getItem("plant_id");
@@ -24,6 +26,7 @@ const TaskListWeb = () => {
         }
       );
       setTaskList(response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching tasks: ", error);
     }
@@ -65,8 +68,15 @@ const TaskListWeb = () => {
     fetchTasks();
   }, []);
 
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   return (
-    <ImageBackground source={require('../assets/add-tasks-bg.png')} style={styles.imageBackground}>
+    <ImageBackground
+      source={require("../assets/add-tasks-bg.png")}
+      style={styles.imageBackground}
+    >
       <View style={styles.container}>
         {taskList.map((task, index) => (
           <View key={index} style={styles.taskContainer}>
@@ -140,8 +150,8 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 1,
-    width: '100%', // Adjust width if needed
-    height: '100%', // Adjust height if needed
+    width: "100%", // Adjust width if needed
+    height: "100%", // Adjust height if needed
   },
 });
 
