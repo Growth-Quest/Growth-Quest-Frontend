@@ -2,7 +2,7 @@ import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import axios from 'axios';
-import { HomepageWeb } from '../components/HomepageWeb'; 
+import { HomepageWeb } from '../../components/HomepageWeb'; 
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
