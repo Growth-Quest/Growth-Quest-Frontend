@@ -82,6 +82,7 @@ export const HomepageWeb = () => {
   return (
     <div className="main-background">
       <div style={{ position: "absolute", top: 10, left: 10, backgroundColor: "rgba(46, 248, 83, 0.7)", padding: "10px", borderRadius: "5px",}}>
+
         {user && <Text>Username: {user.username}</Text>}
         <div>
           <div>{plant && <Text>Level: {plant.level}</Text>}</div>
@@ -92,10 +93,12 @@ export const HomepageWeb = () => {
             <Text>Health: {plant?.health_points}</Text>
           </div>
         </div>
+        
       </div>
       <div className="gif-center-container">
         <img className="centered-gif" src={getSprite()} alt="GIF" />
       </div>
+      
     </div>
   );
 };

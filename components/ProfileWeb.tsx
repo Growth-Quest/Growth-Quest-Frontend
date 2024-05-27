@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { router } from "expo-router";
+import LoadingScreen from "./LoadingScreen";
 
 interface IUser {
   username: string;
@@ -13,6 +14,7 @@ interface IPlant {
 }
 
 const Profile = () => {
+  const [loading, setLoading] = useState<boolean>(true); // State for loading status
   const [user, setUser] = useState<IUser | null>(null);
   const [plant, setPlant] = useState<IPlant | null>(null);
   const [editing, setEditing] = useState<boolean>(false);
@@ -22,32 +24,27 @@ const Profile = () => {
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
 
-    const fetchUser = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const userResponse = await axios.get(
           `https://growth-quest.onrender.com/users/get/${user_id}`
         );
-        setUser(response.data);
-      } catch (error) {
-        console.log("user not found", error);
-      }
-    };
+        setUser(userResponse.data);
 
-    const fetchPlant = async () => {
-      try {
-        const response = await axios.get(
+        const plantResponse = await axios.get(
           `https://growth-quest.onrender.com/plants/get-by-user/${user_id}`
         );
-        setPlant(response.data);
-        console.log("plant", response.data);
+        setPlant(plantResponse.data);
+
+        setLoading(false);
       } catch (error) {
-        console.log("plant not found", error);
+        console.log("Error:", error);
       }
     };
 
-    fetchPlant();
-    fetchUser();
+    fetchData();
   }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user_id");
@@ -73,51 +70,67 @@ const Profile = () => {
           : null
       );
     } catch (error) {
-      console.log("error updating user", error);
+      console.log("Error updating user:", error);
     }
   };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="profile-background">
       <div className="box">
         <div className="signup-text">
           <div style={{ padding: 20 }}>
-         
             <center>
-            
               {user && (
-                <>
+                <div>
                   {editing ? (
-                    <>
-                      <input className="input"
+                    <div>
+                      <input
+                        className="input"
                         type="text"
                         value={newUsername}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="Enter username"
                       />
-                      <br></br><br></br>
-                      <input className="input"
+                      <br />
+                      <br />
+                      <input
+                        className="input"
                         type="email"
                         value={newEmail}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter email"
                       />
-                      <br></br> <br></br>
-                      <button className="signup" onClick={handleEdit}>Save</button>
-                    </>
+                      <br />
+                      <br />
+                      <button className="signup" onClick={handleEdit}>
+                        Save
+                      </button>
+                    </div>
                   ) : (
-                    <>
+                    <div>
+                      <div style={{ width: "100px", height: "150px" }}>
+                        <img
+                          src="../assets/logo.png"
+                          alt="Logo Namon"
+                          style={{ width: "100%", height: "100%" }}
+                        />
+                      </div>
                       <p id="username">Username: {user.username}</p>
                       <p id="email">Email: {user.email}</p>
-                      <button className="signup"
+                      <button
+                        className="signup"
                         id="edit-user-info"
                         onClick={() => setEditing(true)}
                       >
                         Edit
                       </button>
-                    </>
+                    </div>
                   )}
-                </>
+                </div>
               )}
               {plant && (
                 <div>
@@ -126,7 +139,9 @@ const Profile = () => {
                 </div>
               )}
               <div>
-                <button className="signup" onClick={handleLogout}>Logout</button>
+                <button className="signup" onClick={handleLogout}>
+                  Logout
+                </button>
               </div>
             </center>
           </div>

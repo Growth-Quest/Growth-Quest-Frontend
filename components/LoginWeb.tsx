@@ -9,9 +9,16 @@ const LoginWeb = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("plant_id");
+    router.push("/");
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true); 
 
     try {
       const response = await axios.post(
@@ -23,7 +30,7 @@ const LoginWeb = () => {
       );
       console.log("Login response :", response.data);
       localStorage.setItem("user_id", response.data.userId);
-      localStorage.setItem("plant_id", response.data.plant_id)
+      localStorage.setItem("plant_id", response.data.plant_id);
       router.push("/home");
     } catch (error: any) {
       if (error.response) {
@@ -35,6 +42,7 @@ const LoginWeb = () => {
         console.error("Error logging in: ", error.message);
       }
       alert("Error logging in");
+      router.push("/password-error")
     } finally {
       setLoading(false); // Stop loading, whether success or error
     }
@@ -47,6 +55,7 @@ const LoginWeb = () => {
       ) : (
         <div>
           <center>
+          
             <div className="box">
               <form onSubmit={handleSubmit}>
                 <div>
