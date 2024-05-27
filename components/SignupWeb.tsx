@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { router } from "expo-router";
-import { Text, StyleSheet,  Pressable } from "react-native";
+import { Text, StyleSheet, Pressable } from "react-native";
 import "./index.css";
 
 const Signup = () => {
@@ -93,7 +93,7 @@ const Signup = () => {
                     </div>
                   </label>
                 </label>
-                
+
                 <br></br>
                 <input
                   className="input"
@@ -104,18 +104,20 @@ const Signup = () => {
                 />
               </div>
               <br></br>
-              <button className="signup" type="submit" id="signup">
+              <button className="signup" type="submit">
                 Sign Up
               </button>
               <br></br>
               <label className="signup-text">
-                Already have an account?  <Pressable
-              onPress={() => {
-                router.push("/");
-              }}
-            >
-              Login
-            </Pressable>
+                Already have an account?{" "}
+                <Pressable
+                  onPress={() => {
+                    router.push("/");
+                  }}
+                >
+                  <br></br>
+                  <div className="button-style">Login</div>
+                </Pressable>
               </label>
             </form>
           </div>

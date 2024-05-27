@@ -14,18 +14,18 @@
 }
 
 .box-signup {
-    height: 500px;
-    width: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.7);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 22px;
-  }
+  height: 500px;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 22px;
+}
 
 .input {
   font-size: 12px;
@@ -41,7 +41,7 @@
 }
 
 .signup {
-  background-color: rgba(109, 107, 107, 0.7);
+  background-color: #999e99;
   border: none;
   color: black; /* Text color */
   font-size: 15px;
@@ -62,11 +62,37 @@
 }
 
 .signup:hover {
-  background-color: #999e99;
+  background-color: rgba(109, 107, 107, 0.7);
 }
 
 .signup-background {
   background-image: url("../assets/signup-background.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-text {
+  color: #333;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: arial;
+}
+
+.signup-title {
+  color: #333;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: arial;
+}
+
+/* background for main */
+.main-background {
+  background-image: url("../assets/background-web.png");
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -76,20 +102,156 @@
   align-items: center;
 }
 
-.signup-text {
+/*design for button signup and login*/
+
+.button-style {
+  display: inline-block;
+  padding: 10px 15px;
+  color: #338333;
+  background-color: rgba(46, 230, 73, 0.7); /* black with 70% opacity */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 1.5;
+  transition: background-color 0.3s ease;
+}
+
+.button-style:hover {
+  background-color: rgba(
+    128,
+    245,
+    130,
+    0.9
+  ); /* black with 90% opacity on hover */
+}
+
+.dropdown {
+  width: 200px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.box-tasks {
+  height: 450px;
+  width: 300px;
+  display: flex;
+  flex-direction: center;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 22px;
+}
+
+/* Button Submit on add tasks*/
+
+.submit-button {
   /* Add your styles here. For example: */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center; /* Center the text */
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.add-tasks-background {
+  background-image: url("../assets/add-tasks-bg.png");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  padding: 20px;
+  justify-content: center;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-add-tasks {
+  font-size: 12px;
+  background: #ffff;
+  color: #000000;
+  height: 35px;
+  width: 180px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  text-align: left;
+}
+
+.picker {
+  font-size: 18px;
+  margin-bottom: 15px;
+  border-width: 1px;
+  padding: 10px;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.signup-title {
+  color: #333;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: arial;
+}
+
+.signup-text {
   color: #333;
   font-size: 15px;
   font-weight: bold;
   font-family: arial;
 }
 
-.signup-title {
-    /* Add your styles here. For example: */
-    color: #333;
-    font-size: 25px;
-    font-weight: bold;
-    font-family: arial;
-  }
-  
-/* Login*/
+.gif-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+
+.centered-gif {
+  width: 150px; 
+  height: 150px; 
+}
+
+.profile-background {
+  background-image: url("../assets/profile-background.png");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
