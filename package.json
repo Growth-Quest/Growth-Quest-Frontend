@@ -49,6 +49,7 @@
     "@types/js-cookie": "^3.0.6",
     "@types/react": "~18.2.45",
     "chromedriver": "^125.0.2",
+    "identity-obj-proxy": "^3.0.0",
     "jest-dom": "^4.0.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-expo": "^51.0.2",
