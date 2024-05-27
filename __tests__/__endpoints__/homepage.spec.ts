@@ -1,5 +1,5 @@
 import { Builder, By, until, WebDriver } from 'selenium-webdriver';
-import { getElementById } from '../utils';
+import { getElementById } from '../../utils';
 import 'selenium-webdriver/chrome';
 import 'chromedriver';
 
