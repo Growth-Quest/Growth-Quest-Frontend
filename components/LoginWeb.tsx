@@ -35,7 +35,7 @@ const LoginWeb = () => {
       } else {
         console.error("Error logging in: ", error.message);
       }
-      router.push('/password-error');
+      alert("Error logging in");
     } finally {
       setLoading(false); // Stop loading, whether success or error
     }
@@ -92,7 +92,7 @@ const LoginWeb = () => {
                   />
                 </div>
                 <br></br>
-                <button className="signup" type="submit" id="submit">Login</button>
+                <button className="signup" type="submit">Login</button>
                 <br></br>
                 <br></br>
                 <label className="signup-text">
@@ -102,7 +102,8 @@ const LoginWeb = () => {
                       router.push("/signup");
                     }}
                   >
-                    Sign Up
+                     <br></br>
+                  <div className="button-style">Sign Up</div>
                   </Pressable>
                 </label>
               </form>
@@ -115,3 +116,5 @@ const LoginWeb = () => {
 };
 
 export default LoginWeb;
+
+

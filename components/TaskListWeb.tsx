@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Button, View, Text, StyleSheet } from "react-native";
+import { Button, View, Text, StyleSheet, ImageBackground } from "react-native";
 
 interface Task {
   id: string;
@@ -8,7 +8,7 @@ interface Task {
   description: string;
   type: string;
 }
- 
+
 const TaskListWeb = () => {
   const [taskList, setTaskList] = useState<Task[]>([]);
   const user_id = localStorage.getItem("user_id");
@@ -16,7 +16,6 @@ const TaskListWeb = () => {
 
   const fetchTasks = async () => {
     try {
-      console.log("user id: ", user_id);
       const response = await axios.post(
         "https://growth-quest.onrender.com/tasks/get-by-status",
         {
@@ -24,7 +23,6 @@ const TaskListWeb = () => {
           status: "ongoing",
         }
       );
-      console.log("Response: ", response.data);
       setTaskList(response.data);
     } catch (error) {
       console.error("Error fetching tasks: ", error);
@@ -41,7 +39,6 @@ const TaskListWeb = () => {
         }
       );
       alert("Task Complete");
-      console.log("Response: ", response.data);
       await fetchTasks();
     } catch (error) {
       console.error("Error updating task status: ", error);
@@ -58,8 +55,7 @@ const TaskListWeb = () => {
         }
       );
       alert("Task Failed");
-      console.log("Response: ", response.data);
-      fetchTasks();
+      await fetchTasks();
     } catch (error) {
       console.error("Error updating task status: ", error);
     }
@@ -70,37 +66,42 @@ const TaskListWeb = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {taskList.map((task, index) => (
-        <View key={index} style={styles.taskContainer} id={"task-" + index}>
-          <Text style={styles.taskName}>{task.task_name}</Text>
-          <Text style={styles.taskDescription}>{task.description}</Text>
-          <Text style={styles.taskType}>{task.type}</Text>
-          <View style={styles.buttonContainer}>
-            <View>
-              <button
-                id={"done-button-" + index}
-                title="Done"
-                onClick={() => handleDone(task.id)}
-                color="green"
-              >
-                Done
-              </button>
+    <ImageBackground source={require('../assets/add-tasks-bg.png')} style={styles.imageBackground}>
+      <View style={styles.container}>
+        {taskList.map((task, index) => (
+          <View key={index} style={styles.taskContainer}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text>Task Name: </Text>
+              <Text style={styles.taskName}>{task.task_name}</Text>
             </View>
-            <View style={styles.giveUpButton}>
-              <button
-                id={ "give-up-button-" + index }
-                title="Give Up"
-                onClick={() => handleFailed(task.id)}
-                color="red"
-              >
-                Give Up
-              </button>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text>Task Description: </Text>
+              <Text style={styles.taskDescription}>{task.description}</Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text>Task Difficulty: </Text>
+              <Text style={styles.taskType}>{task.type}</Text>
+            </View>
+            <View style={styles.buttonContainer}>
+              <View>
+                <Button
+                  title="Done"
+                  onPress={() => handleDone(task.id)}
+                  color="green"
+                />
+              </View>
+              <View style={styles.giveUpButton}>
+                <Button
+                  title="Give Up"
+                  onPress={() => handleFailed(task.id)}
+                  color="red"
+                />
+              </View>
             </View>
           </View>
-        </View>
-      ))}
-    </View>
+        ))}
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -109,11 +110,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   taskContainer: {
-    marginBottom: 20,
-    padding: 10,
+    marginBottom: 25,
+    padding: 25,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
+    backgroundColor: "rgba(255, 255, 255, 0.8)", // Background color for the task container
   },
   taskName: {
     fontSize: 18,
@@ -121,10 +123,12 @@ const styles = StyleSheet.create({
   },
   taskDescription: {
     fontSize: 14,
+    fontWeight: "bold",
     marginBottom: 5,
   },
   taskType: {
     fontSize: 14,
+    fontWeight: "bold",
     fontStyle: "italic",
   },
   buttonContainer: {
@@ -133,6 +137,11 @@ const styles = StyleSheet.create({
   },
   giveUpButton: {
     marginLeft: 10,
+  },
+  imageBackground: {
+    flex: 1,
+    width: '100%', // Adjust width if needed
+    height: '100%', // Adjust height if needed
   },
 });
 
