@@ -46,7 +46,7 @@ describe('LoginPageWeb', () => {
 
     // Wait for the URL to change to the home page
     await driver.wait(until.urlIs(`${rootURL}/home`), 30000);
-  }, 60000); // Increase timeout for this test if necessary
+  }, 60000);
 
   it('should navigate to error page if user credentials are incorrect', async () => {
     await driver.get(`${rootURL}/`);

@@ -3,7 +3,7 @@ module.exports = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["./jest.setup.js"],
   // roots: ['<rootDir>/src'],
-  testRegex: "/__tests__/(?:__components__|__endpoints__)/.*\\.spec\\.ts$",
+  testRegex: "/__tests__/(?:__components__|__endpoints__)/.*\\.(spec\\.ts|spec\\.tsx)$",
   transform: {
     "^.+\\.tsx?$": "@swc/jest",
   },
