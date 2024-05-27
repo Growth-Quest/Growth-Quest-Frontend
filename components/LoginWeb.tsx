@@ -21,7 +21,8 @@ const LoginWeb = () => {
           password,
         }
       );
-      console.log("Login response :", response.data);
+      console.log("login successful");
+      localStorage.setItem("token", response.data.token);
       localStorage.setItem("user_id", response.data.userId);
       localStorage.setItem("plant_id", response.data.plant_id)
       router.push("/home");

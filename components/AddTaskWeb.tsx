@@ -96,6 +96,7 @@ const AddTaskWeb = () => {
               </button>
             </View>
           </form>
+
         </View>
       </View>
     </ImageBackground>
