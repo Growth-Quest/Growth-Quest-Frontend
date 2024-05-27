@@ -1,9 +1,13 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "node",
-  testMatch: [
-    "**/__tests__/**/*.[jt]s?(x)",
-    "**/?(*.)+(spec|test).[tj]s?(x)",
-  ],
+  preset: "jest-expo",
+  testEnvironment: "jsdom",
+  // roots: ['<rootDir>/src'],
+  testRegex: "/__tests__/.*\\.spec\\.tsx$",
+  transform: {
+    "^.+\\.tsx?$": "@swc/jest",
+  },
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/app/$1",
+    "\\.(css|less)$": "identity-obj-proxy",
+  },
 };
