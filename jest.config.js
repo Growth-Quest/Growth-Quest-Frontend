@@ -8,6 +8,6 @@ module.exports = {
   },
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/app/$1",
-    "\\.(css|less)$": "identity-obj-proxy",
+    "\\.(css|less)$": "identity-obj-proxy"
   },
 };
