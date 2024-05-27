@@ -69,6 +69,7 @@ const AddTaskWeb = () => {
             <TextInput
               style={styles.input}
               value={title}
+              data-testid="title"
               placeholder="Enter task title"
               onChangeText={(text) => setTitle(text)}
             />
@@ -80,6 +81,7 @@ const AddTaskWeb = () => {
             <TextInput
               style={styles.input}
               value={description}
+              data-testid="description"
               onChangeText={(text) => setDescription(text)}
               multiline // If you want to allow multiple lines of input
             />
