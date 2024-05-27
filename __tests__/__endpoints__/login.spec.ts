@@ -4,7 +4,7 @@ import { Builder, By, until, WebDriver } from 'selenium-webdriver';
 import 'selenium-webdriver/chrome';
 import 'chromedriver';
 
-import { getElementById, getElementByXPath } from '../utils';
+import { getElementById, getElementByXPath } from '../../utils';
 
 const rootURL = 'http://localhost:8081';
 

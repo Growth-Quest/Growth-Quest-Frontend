@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
-import LoginWeb from '../components/LoginWeb';
+import LoginWeb from '../../components/LoginWeb';
 import { BrowserRouter as Router } from 'react-router-dom';
 import React from 'react';
 
